@@ -1,7 +1,16 @@
 // Body
-$body-bg: #f8fafc;
+$body-bg: #ffffff;
 
 // Typography
 $font-family-sans-serif: 'Nunito', sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
+
+// Colors - white & purple theme
+$primary: #6b21a8; // deep purple
+$secondary: #a855f7; // lighter purple
+$body-color: #111827;
+$link-color: $primary;
+$navbar-light-color: $primary;
+$navbar-light-hover-color: darken($primary, 10%);
+$navbar-light-active-color: darken($primary, 15%);

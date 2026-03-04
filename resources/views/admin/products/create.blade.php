@@ -1,0 +1,94 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="mb-4">
+                <h1 class="fw-bold text-primary">Add product</h1>
+                <p class="text-muted mb-0">Create a new Premier League item.</p>
+            </div>
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" name="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" required>
+                            @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Category</label>
+                            <select name="category_id" class="form-select @error('category_id') is-invalid @enderror" required>
+                                <option value="" disabled selected>Select category</option>
+                                @foreach($categories as $id => $name)
+                                    <option value="{{ $id }}" @selected(old('category_id') == $id)>{{ $name }}</option>
+                                @endforeach
+                            </select>
+                            @error('category_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Brand</label>
+                            <select name="brand_id" class="form-select @error('brand_id') is-invalid @enderror" required>
+                                <option value="" disabled selected>Select brand</option>
+                                @foreach($brands as $id => $name)
+                                    <option value="{{ $id }}" @selected(old('brand_id') == $id)>{{ $name }}</option>
+                                @endforeach
+                            </select>
+                            @error('brand_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Price</label>
+                            <input type="number" name="price" step="0.01" min="0" value="{{ old('price') }}" class="form-control @error('price') is-invalid @enderror" required>
+                            @error('price')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Stock</label>
+                            <input type="number" name="stock" min="0" value="{{ old('stock') }}" class="form-control @error('stock') is-invalid @enderror" required>
+                            @error('stock')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea name="description" rows="4" class="form-control @error('description') is-invalid @enderror" required>{{ old('description') }}</textarea>
+                            @error('description')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Photo (single)</label>
+                            <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" accept="image/*">
+                            @error('image')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ route('admin.products.index') }}" class="btn btn-outline-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Save product</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+

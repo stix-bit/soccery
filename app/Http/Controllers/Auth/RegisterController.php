@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -51,6 +53,8 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'username' => ['required', 'string', 'max:255', 'unique:users,username'],
+            'photo' => ['nullable', 'image', 'max:2048'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -63,10 +67,40 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $imgPath = null;
+
+        if (isset($data['photo']) && $data['photo'] instanceof \Illuminate\Http\UploadedFile) {
+            $imgPath = $data['photo']->store('users', 'public');
+        }
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'username' => $data['username'],
+            'role' => 'customer',
+            'status' => 'active',
+            'img_path' => $imgPath,
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    /**
+     * Override register to handle file upload.
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        $data = $request->all();
+        if ($request->hasFile('photo')) {
+            $data['photo'] = $request->file('photo');
+        }
+
+        event(new Registered($user = $this->create($data)));
+
+        $this->guard()->login($user);
+
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath());
     }
 }
