@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 04, 2026 at 02:25 PM
+-- Generation Time: Mar 05, 2026 at 02:19 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -34,6 +34,13 @@ CREATE TABLE `brands` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `brands`
+--
+
+INSERT INTO `brands` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Puma', '2026-03-05 00:35:58', '2026-03-05 00:35:58');
+
 -- --------------------------------------------------------
 
 --
@@ -45,6 +52,14 @@ CREATE TABLE `cache` (
   `value` mediumtext NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `cache`
+--
+
+INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
+('laravel-cache-lance.haboc@radpdb.com|127.0.0.1', 'i:1;', 1772671692),
+('laravel-cache-lance.haboc@radpdb.com|127.0.0.1:timer', 'i:1772671692;', 1772671692);
 
 -- --------------------------------------------------------
 
@@ -70,6 +85,13 @@ CREATE TABLE `categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Soccer Ball', '2026-03-05 00:37:39', '2026-03-05 00:37:39');
 
 -- --------------------------------------------------------
 
@@ -165,6 +187,16 @@ CREATE TABLE `orders` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `status`, `payment_method`, `created_at`, `updated_at`) VALUES
+(1, 2, 'pending', 'online', '2026-03-04 17:14:20', '2026-03-04 17:14:20'),
+(2, 2, 'pending', 'online', '2026-03-04 17:15:18', '2026-03-04 17:15:18'),
+(3, 2, 'pending', 'online', '2026-03-04 17:15:31', '2026-03-04 17:15:31'),
+(4, 2, 'pending', 'online', '2026-03-04 17:17:03', '2026-03-04 17:17:03');
+
 -- --------------------------------------------------------
 
 --
@@ -178,6 +210,16 @@ CREATE TABLE `order_items` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`order_id`, `product_id`, `quantity`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, '2026-03-04 17:14:20', '2026-03-04 17:14:20'),
+(2, 1, 1, '2026-03-04 17:15:18', '2026-03-04 17:15:18'),
+(3, 1, 1, '2026-03-04 17:15:31', '2026-03-04 17:15:31'),
+(4, 1, 1, '2026-03-04 17:17:03', '2026-03-04 17:17:03');
 
 -- --------------------------------------------------------
 
@@ -210,6 +252,13 @@ CREATE TABLE `products` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `category_id`, `brand_id`, `name`, `description`, `price`, `stock`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 1, 'Premier League Soccer Ball', 'Premier League Soccer Match Ball made by Puma', 500.00, 50, '2026-03-04 17:10:02', '2026-03-04 17:10:02', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -224,6 +273,13 @@ CREATE TABLE `product_images` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `product_images`
+--
+
+INSERT INTO `product_images` (`id`, `product_id`, `img_path`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 'products/E7bQn4rhLHe63UAISCEEOhRci0y3kQ6voWdz7phk.jpg', '2026-03-04 17:10:02', '2026-03-04 17:10:02', NULL);
 
 -- --------------------------------------------------------
 
@@ -261,9 +317,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('6FQA3YPQtAAEjUyKUqQRQQYi72zjJyUSlUgiVojn', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiNjQwVlZNSFBsUjhSbzhuSXZKb2hkd2RaYk9vaHdTM0MwRUo2c28wZiI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czoyNjoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2hvbWUiO31zOjk6Il9wcmV2aW91cyI7YToyOntzOjM6InVybCI7czoyMToiaHR0cDovLzEyNy4wLjAuMTo4MDAwIjtzOjU6InJvdXRlIjtOO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1772630546),
-('8UGd05cNt6eBDhAMGBPdcSCgMQe0PgMgNbludOKD', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiQjBGcnphcEFWSHFXTmZWVFUwTTYxOGlFQkxOSHFtRVpqaDBjR25CMiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7Tjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1772629639),
-('RC89W5SOyal8BUA4kP69VE9cXTVBqGxvfGiqRroP', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiZXA2RVVlbHdiam1kdlVEWnNQMUY1TUliNnFxRHFmVjhzdm1nUVF5TiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7czo1OiJyb3V0ZSI7czo1OiJsb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1772629638);
+('TkyfgLHj70GPOK4qu96AchdTJxRc2txRrGYgWPiq', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiMnZ5SXdNbWlqNVJPU09nT0I4MHVWSHpFZXAwSzVEZHZKajUyZDVWVSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9ob21lIjtzOjU6InJvdXRlIjtzOjQ6ImhvbWUiO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToyO3M6NDoiYXV0aCI7YToxOntzOjIxOiJwYXNzd29yZF9jb25maXJtZWRfYXQiO2k6MTc3MjY3MzI1ODt9fQ==', 1772673431);
 
 -- --------------------------------------------------------
 
@@ -273,9 +327,9 @@ INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, 
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum('admin','customer') NOT NULL,
   `status` enum('active','inactive','suspended') NOT NULL DEFAULT 'active',
@@ -286,6 +340,15 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `role`, `status`, `img_path`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'test', '', 'lance@soccery.com', '$2y$12$B2kn7AqyiPLLl8iXm8d1Tern0pu8m21GpIlF0wZEXWGO2JTvyK5PC', 'customer', 'active', 'users/x96oC7UdfHc5RZ7Yphv3jAWHzw9M2P7dOqgV0XIr.png', NULL, '2acBTJMQAijV4TobnmXbWvHNlohZh8A3cjpG9fVmFBW39mhdiJC0u3xhlgH5', '2026-03-04 16:43:36', '2026-03-04 16:43:36', NULL),
+(2, 'John', 'Elden Ring', 'test2@gmail.com', '$2y$12$5mBJSnntqBKyTPG32wMbsuyw39jqoihfy8gZEDOGUGmA.Sv09dW2K', 'customer', 'active', 'users/nqp7DI0S0bMBCq2UdAv3Le6L6HN4AcACK8CRUrmE.jpg', NULL, NULL, '2026-03-04 17:00:04', '2026-03-04 17:00:04', NULL),
+(3, 'Test', 'Test', 'test3@gmail.com', '$2y$12$jHW.jb.O3y32kxcq5LNbc.t4RYfJXrWJv9cUMyXdVWaIUQKCM/cpS', 'admin', 'active', NULL, NULL, NULL, '2026-03-04 17:00:45', '2026-03-04 17:00:45', NULL);
 
 --
 -- Indexes for dumped tables
@@ -400,8 +463,7 @@ ALTER TABLE `sessions`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`),
-  ADD UNIQUE KEY `users_username_unique` (`username`);
+  ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -411,13 +473,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -441,25 +503,25 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

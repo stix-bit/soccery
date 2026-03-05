@@ -12,7 +12,7 @@
 <body style="font-family: Arial, sans-serif; background-color: #ffffff; color: #111827;">
     <h2 style="color:#6b21a8;">Thank you for your purchase from Soccery!</h2>
     <p>Hi {{ $order->user->name }},</p>
-    <p>Your order #{{ $order->id }} has been received.</p>
+    <p>Your order #{{ $order->id }} has been updated.</p>
 
     <h3 style="color:#6b21a8;">Order summary</h3>
     <table width="100%" cellpadding="6" cellspacing="0" border="1" style="border-collapse: collapse; border-color:#e5e7eb;">

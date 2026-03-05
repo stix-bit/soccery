@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CheckoutController;
 
@@ -23,6 +24,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::post('users/{user}/status', [UserController::class, 'updateStatus'])->name('users.status');
     Route::post('users/{user}/role', [UserController::class, 'updateRole'])->name('users.role');
+
+    Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::post('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.status');
 });
 
 Route::middleware('auth')->group(function () {

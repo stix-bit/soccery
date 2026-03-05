@@ -25,7 +25,6 @@
                             <th>Email</th>
                             <th>Role</th>
                             <th>Status</th>
-                            <th class="text-end">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,9 +60,6 @@
                                         </select>
                                         <button type="submit" class="btn btn-outline-primary btn-sm">Update</button>
                                     </form>
-                                </td>
-                                <td class="text-end">
-                                    <span class="text-muted small">CRUD hooks can be added here.</span>
                                 </td>
                             </tr>
                         @empty
