@@ -22,7 +22,6 @@
                             <th>#</th>
                             <th>Photo</th>
                             <th>Name</th>
-                            <th>Username</th>
                             <th>Email</th>
                             <th>Role</th>
                             <th>Status</th>
@@ -40,8 +39,7 @@
                                         <span class="badge rounded-pill bg-secondary">No photo</span>
                                     @endif
                                 </td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->username }}</td>
+                                <td>{{ $user->last_name }} {{ $user->first_name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
                                     <form action="{{ route('admin.users.role', $user) }}" method="POST" class="d-flex align-items-center gap-2">

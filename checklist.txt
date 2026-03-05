@@ -1,18 +1,18 @@
 MP1 Product/Service  
-   Product/Service CRUD datatable 8pts - Cedro
-   Product/Service CRUDRestore datatable upload a single photo 10pts - Cedro
+   Product/Service CRUD datatable 8pts - Cedro ✅
+   Product/Service CRUDRestore datatable upload a single photo 10pts - Cedro ✅
    Product/Service CRUDRestore datatable upload/view  multiple photos 15pts - Sherwin
    Product/Service CRUDRestore datatable upload/view  multiple photos, import products on excel worksheet. 20pts -     Sherwin
 
 mp2 User CRUD 
-   User Registration with upload photo 5pts - Cedro
+   User Registration with upload photo 5pts - Cedro ✅
    User update profile and upload photo. 5pts - Cedro
-   list users on a datatable. 5pts - Sherwin
-   admin can set the status of a user to active/inactive. update role of user. 5pts - Sherwin
+   list users on a datatable. 5pts - Sherwin ✅
+   admin can set the status of a user to active/inactive. update role of user. 5pts - Sherwin ✅
 
 mp3 
    authentication. send an email verification after registration. only verified users can login. - Sherwin
-   admin routes should be protected from unauthenticated and unauthorized (not admin role) users. 20pts- Sherwin
+   admin routes should be protected from unauthenticated and unauthorized (not admin role) users. 20pts- Sherwin ✅
 
 mp4 Product review CRUD 
    customers that bought a product or service can post a review/comment and rating on that service or product. 8pts -    Cedro
@@ -21,7 +21,7 @@ mp4 Product review CRUD
    the administrator can delete user reviews. 5pts - Sherwin
 
 term test 
-   transaction. an email will be sent after a transaction has been completed. 10pts - Sherwin
+   transaction. an email will be sent after a transaction has been completed. 10pts - Sherwin ✅
    administrator can update the status of the transaction. 5pts - Sherwin
    send an email after the update 5pts - Sherwin
    attach on the email the receipt in pdf format. the receipt contains the customer and order details. 10pts - Sherwin

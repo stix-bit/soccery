@@ -32,7 +32,7 @@
             <div class="card border-0 shadow-sm h-100">
                 <div class="card-body">
                     <h5 class="card-title text-primary">Sales Charts</h5>
-                    <p class="card-text text-muted">Placeholder for future sales visualizations.</p>
+                    <p class="card-text text-muted">Placeholder</p>
                 </div>
             </div>
         </div>
