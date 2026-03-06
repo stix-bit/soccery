@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\ShopController;
@@ -27,6 +28,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
     Route::post('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.status');
+
+    Route::resource('brands', BrandController::class);
+    Route::post('brands/{brand}/restore', [BrandController::class, 'restore'])->name('brands.restore');
 });
 
 Route::middleware('auth')->group(function () {

@@ -25,6 +25,7 @@
                             <th>#</th>
                             <th>Photo</th>
                             <th>Name</th>
+                            <th>Description</th>
                             <th>Category</th>
                             <th>Brand</th>
                             <th>Price</th>
@@ -48,6 +49,7 @@
                                     @endif
                                 </td>
                                 <td>{{ $product->name }}</td>
+                                <td>{{ Str::limit($product->description, 60) }}</td>
                                 <td>{{ $product->category?->name }}</td>
                                 <td>{{ $product->brand?->name }}</td>
                                 <td>£{{ number_format($product->price, 2) }}</td>
