@@ -17,7 +17,7 @@ class BrandController extends Controller
     public function index(): View
     {
         $brands = Brand::withTrashed()
-            ->orderByDesc('created_at')
+            ->orderByDesc('id')
             ->paginate(10);
 
         return view('admin.brands.index', compact('brands'));
@@ -26,7 +26,7 @@ class BrandController extends Controller
     public function create(): View
     {
 
-        $brands = Brand::orderBy('name')->pluck('name', 'id');
+        $brands = Brand::orderBy('id')->pluck('name', 'id');
 
         return view('admin.brands.create', compact('brands'));
     }
@@ -46,7 +46,7 @@ class BrandController extends Controller
 
     public function edit(Brand $brand): View
     {
-        $allBrands = Brand::orderBy('name')->pluck('name', 'id'); // optional, for dropdowns etc.
+        $allBrands = Brand::orderBy('id')->pluck('name', 'id'); // optional, for dropdowns etc.
 
             return view('admin.brands.edit', [
                 'brand' => $brand,     // single brand for editing

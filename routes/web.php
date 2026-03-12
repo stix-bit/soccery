@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\Admin\CategoryController;
 
 Route::get('/', [ShopController::class, 'index'])->name('landing');
 
@@ -31,6 +32,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     Route::resource('brands', BrandController::class);
     Route::post('brands/{brand}/restore', [BrandController::class, 'restore'])->name('brands.restore');
+
+    Route::resource('categories', CategoryController::class);
+    Route::post('categories/{category}/restore', [CategoryController::class, 'restore'])->name('categories.restore');
 });
 
 Route::middleware('auth')->group(function () {

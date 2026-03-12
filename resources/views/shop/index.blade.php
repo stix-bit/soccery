@@ -11,8 +11,8 @@
             @auth
                 <a href="{{ route('home') }}" class="btn btn-outline-primary btn-sm">Go to dashboard</a>
             @else
-                <a href="{{ route('login') }}" class="btn btn-primary btn-sm me-2">Login</a>
-                <a href="{{ route('register') }}" class="btn btn-outline-primary btn-sm">Register</a>
+                <!-- <a href="{{ route('login') }}" class="btn btn-primary btn-sm me-2">Login</a>
+                <a href="{{ route('register') }}" class="btn btn-outline-primary btn-sm">Register</a> -->
             @endauth
         </div>
     </div>

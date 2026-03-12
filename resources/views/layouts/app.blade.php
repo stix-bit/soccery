@@ -32,7 +32,7 @@
                         @auth
                             @if(auth()->user()->role === 'admin')
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" href="{{ route('admin.dashboard') }}">Admin Home</a>
+                                    <a class="nav-link text-white" href="{{ route('admin.dashboard') }}">Dashboard</a>
                                 </li>
                             @endif
                             <li class="nav-item">

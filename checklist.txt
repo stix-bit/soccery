@@ -26,7 +26,7 @@ mp4 Product review CRUD
    the administrator can delete user reviews. 5pts - Sherwin
 
 mp5 validation 15pts
-   form validation add/edit product/service. user registration validation 15pts 
+   form validation add/edit product/service. user registration validation 15pts ✅
 
 mp6 filter  
    * apply filter when a search for a service or product is made.
