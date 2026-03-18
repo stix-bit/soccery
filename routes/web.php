@@ -10,12 +10,16 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProductSearchController;
 
 Route::get('/', [ShopController::class, 'index'])->name('landing');
 
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::get('/search', [ProductSearchController::class, 'index'])->name('search.index');
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [HomeController::class, 'adminDashboard'])->name('dashboard');
@@ -40,4 +44,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 Route::middleware('auth')->group(function () {
     Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
     Route::post('/purchase/{product}', [CheckoutController::class, 'purchase'])->name('purchase.product');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
