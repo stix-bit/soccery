@@ -13,7 +13,7 @@
                 @endif
             </p>
         </div>
-        <div class="col-md-4 mt-3 mt-md-0">
+        <!-- <div class="col-md-4 mt-3 mt-md-0">
             <form method="GET" action="{{ route('search.index') }}" class="d-flex gap-2">
                 <input
                     type="text"
@@ -24,7 +24,7 @@
                 >
                 <button class="btn btn-primary">Search</button>
             </form>
-        </div>
+        </div> -->
     </div>
 
     <div class="row g-3">

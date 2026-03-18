@@ -52,7 +52,7 @@ quiz 4 user interface design 15pts ✅
 u1 database design/migration 20pts 
    design should be at least 2nd normal form. 10pts ✅
    create the database using migration scripts 5pts ✅
-   database seeding. seed all database tables 5pts 
+   database seeding. seed all database tables 5pts ✅
 
 u2 functional requirements completeness app complexity, added features. 10pts 
    program execution (errors), 10pts ✅
