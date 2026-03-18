@@ -45,6 +45,18 @@
                         @endauth
                     </ul>
 
+                    <form class="d-flex me-3" method="GET" action="{{ route('search.index') }}">
+                        <input
+                            class="form-control form-control-sm"
+                            type="search"
+                            name="q"
+                            value="{{ request('q') }}"
+                            placeholder="Search products…"
+                            aria-label="Search products"
+                            style="min-width:220px;"
+                        >
+                    </form>
+
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest
@@ -62,10 +74,22 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->first_name     }} {{ Auth::user()->last_name }}
+                                    @if (Auth::user()->img_path)
+                                        <img
+                                            src="{{ asset('storage/' . Auth::user()->img_path) }}"
+                                            alt="{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}"
+                                            style="width:28px;height:28px;object-fit:cover;border-radius:9999px;margin-right:8px;"
+                                        >
+                                    @else
+                                        <span style="display:inline-block;width:28px;height:28px;border-radius:9999px;background:rgba(255,255,255,0.35);margin-right:8px;vertical-align:middle;"></span>
+                                    @endif
+                                    {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                        {{ __('Profile') }}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

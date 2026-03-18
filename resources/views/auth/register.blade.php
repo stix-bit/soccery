@@ -17,7 +17,7 @@
                             <div class="col-md-6">
                                 <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" autofocus>
 
-                                @error('name')
+                                @error('first_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -58,6 +58,14 @@
                             <label for="photo" class="col-md-4 col-form-label text-md-end">{{ __('Profile Photo') }}</label>
 
                             <div class="col-md-6">
+                                <div class="mb-2 d-flex align-items-center gap-3">
+                                    <img
+                                        id="photoPreview"
+                                        alt="Profile preview"
+                                        style="display:none;width:64px;height:64px;object-fit:cover;border-radius:9999px;"
+                                    >
+                                    <span id="photoPreviewHint" class="text-muted small">{{ __('Choose an image to preview it.') }}</span>
+                                </div>
                                 <input id="photo" type="file" class="form-control @error('photo') is-invalid @enderror"
                                        name="photo" accept="image/*">
 
@@ -104,4 +112,32 @@
         </div>
     </div>
 </div>
+
+<script>
+    (function () {
+        const input = document.getElementById('photo');
+        const preview = document.getElementById('photoPreview');
+        const hint = document.getElementById('photoPreviewHint');
+        if (!input || !preview) return;
+
+        input.addEventListener('change', function () {
+            const file = input.files && input.files[0];
+            if (!file) {
+                preview.style.display = 'none';
+                if (hint) hint.style.display = '';
+                preview.removeAttribute('src');
+                return;
+            }
+
+            const url = URL.createObjectURL(file);
+            preview.src = url;
+            preview.style.display = '';
+            if (hint) hint.style.display = 'none';
+
+            preview.onload = function () {
+                URL.revokeObjectURL(url);
+            };
+        });
+    })();
+</script>
 @endsection
