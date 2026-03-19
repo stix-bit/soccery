@@ -39,14 +39,24 @@
                             <tr @if($product->trashed()) class="table-warning" @endif>
                                 <td>{{ $product->id }}</td>
                                 <td>
-                                    @php
-                                        $image = $product->images->first();
-                                    @endphp
-                                    @if($image)
-                                        <img src="{{ asset('storage/'.$image->img_path) }}" alt="{{ $product->name }}" class="rounded" style="width: 48px; height: 48px; object-fit: cover;">
-                                    @else
-                                        <span class="text-muted small">No image</span>
-                                    @endif
+                                    <div class="d-flex flex-wrap gap-2">
+                                        @forelse($product->images as $image)
+                                        <div class="position-relative">
+                                            <img src="{{ asset('storage/'.$image->img_path) }}" alt="{{ $product->name }}" class="rounded" style="width: 50px; height: 50px; object-fit: cover;">
+
+                                            <form action="{{ route('admin.products.deleteImage', $image) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this image?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-outline-danger btn-sm" style="width:18px;height:18px;font-size:10px;">X
+                                                </button>
+                                            </form>
+                                            </div>
+                                        @empty
+                                            <div class="text-muted" style="font-size: 12px;">
+                                                No photos
+                                            </div>
+                                        @endforelse
+                                    </div>
                                 </td>
                                 <td>{{ $product->name }}</td>
                                 <td>{{ Str::limit($product->description, 60) }}</td>

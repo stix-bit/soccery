@@ -11,7 +11,9 @@ class ShopController extends Controller
     {
         $products = Product::with('images')
             ->latest()
+            ->orderByDesc('id')
             ->paginate(12);
+            
 
         return view('shop.index', compact('products'));
     }

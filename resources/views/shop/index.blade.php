@@ -21,9 +21,35 @@
         @forelse($products as $product)
             <div class="col-md-3 col-sm-6">
                 <div class="card h-100 border-0 shadow-sm">
-                    @php $image = $product->images->first(); @endphp
-                    @if($image)
-                        <img src="{{ asset('storage/'.$image->img_path) }}" class="card-img-top" alt="{{ $product->name }}" style="height: 180px; object-fit: cover;">
+                    @if($product->images->count())
+                        <div id="productCarousel{{ $product->id }}" class="carousel slide" data-bs-ride="false">
+
+                            <div class="carousel-inner" style="height: 180px;">
+
+                                @foreach($product->images as $index => $image)
+                                    <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                                        <img src="{{ asset('storage/'.$image->img_path) }}"
+                                            class="d-block w-100"
+                                            style="height: 180px; object-fit: cover;"
+                                            alt="{{ $product->name }}">
+                                    </div>
+                                @endforeach
+
+                            </div>
+
+                            <!-- Left button -->
+                            <button class="carousel-control-prev custom-carousel-btn" type="button"
+                                data-bs-target="#productCarousel{{ $product->id }}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                            </button>
+
+                            <!-- Right button -->
+                            <button class="carousel-control-next custom-carousel-btn" type="button"
+                                data-bs-target="#productCarousel{{ $product->id }}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                            </button>
+
+                        </div>
                     @else
                         <div class="bg-light d-flex align-items-center justify-content-center" style="height: 180px;">
                             <span class="text-muted small">No image</span>

@@ -19,7 +19,7 @@ class ProductController extends Controller
     {
         $products = Product::with(['category', 'brand', 'images'])
             ->withTrashed()
-            ->orderByDesc('created_at')
+            ->orderByDesc('id')
             ->paginate(10);
 
         return view('admin.products.index', compact('products'));
@@ -42,18 +42,21 @@ class ProductController extends Controller
             'stock' => ['required', 'integer', 'min:0'],
             'category_id' => ['required', 'exists:categories,id'],
             'brand_id' => ['required', 'exists:brands,id'],
-            'image' => ['nullable', 'image', 'max:2048'],
+            'images' => ['nullable', 'array'],
+            'images.*' => ['image', 'max:2048'],
         ]);
 
         $product = Product::create($validated);
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('products', 'public');
+        if ($request->hasFile('images')) {
+            foreach($request->file('images') as $image) {
+                $path = $image->store('products', 'public');
 
-            ProductImage::create([
-                'product_id' => $product->id,
-                'img_path' => $path,
-            ]);
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'img_path' => $path,
+                ]);
+            }
         }
 
         return redirect()->route('admin.products.index')
@@ -78,24 +81,27 @@ class ProductController extends Controller
             'stock' => ['required', 'integer', 'min:0'],
             'category_id' => ['required', 'exists:categories,id'],
             'brand_id' => ['required', 'exists:brands,id'],
-            'image' => ['nullable', 'image', 'max:2048'],
+            'images' => ['nullable', 'array'],
+            'images.*' => ['image', 'max:2048'],
         ]);
 
         $product->update($validated);
 
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('images')) {
             $oldImage = $product->images()->first();
             if ($oldImage) {
                 Storage::disk('public')->delete($oldImage->img_path);
                 $oldImage->delete();
             }
 
-            $path = $request->file('image')->store('products', 'public');
+            foreach($request->file('images') as $image) {
+                $path = $image->store('products', 'public');
 
-            ProductImage::create([
-                'product_id' => $product->id,
-                'img_path' => $path,
-            ]);
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'img_path' => $path,
+                ]);
+            }
         }
 
         return redirect()->route('admin.products.index')
@@ -113,10 +119,18 @@ class ProductController extends Controller
     public function restore(int $product): RedirectResponse
     {
         $model = Product::withTrashed()->findOrFail($product);
-        $model->restore();
+        $model->restore(); 
 
         return redirect()->route('admin.products.index')
             ->with('status', 'Product restored successfully.');
+    }
+
+    public function deleteImage(ProductImage $image): RedirectResponse
+    {
+        Storage::disk('public')->delete($image->img_path);
+        $image->delete();
+
+        return back()->with('status', 'Image deleted successfully.');
     }
 }
 

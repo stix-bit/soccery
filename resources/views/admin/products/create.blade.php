@@ -73,8 +73,9 @@
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label">Photo (single)</label>
-                            <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" accept="image/*">
+                            <label class="form-label">Photos</label>
+                            <input type="file" name="images[]" multiple class="form-control @error('image') is-invalid @enderror" accept="image/*">
+
                             @error('image')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

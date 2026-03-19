@@ -26,6 +26,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     Route::resource('products', ProductController::class);
     Route::post('products/{product}/restore', [ProductController::class, 'restore'])->name('products.restore');
+    Route::delete('product-images/{image}', [ProductController::class, 'deleteImage'])->name('products.deleteImage');
 
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::post('users/{user}/status', [UserController::class, 'updateStatus'])->name('users.status');

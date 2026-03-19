@@ -75,7 +75,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label d-block">Photo (single)</label>
+                            <label class="form-label d-block">Photos</label>
                             @php
                                 $image = $product->images->first();
                             @endphp
@@ -84,9 +84,9 @@
                                     <img src="{{ asset('storage/'.$image->img_path) }}" alt="{{ $product->name }}" class="rounded" style="width: 80px; height: 80px; object-fit: cover;">
                                 </div>
                             @endif
-                            <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" accept="image/*">
-                            <small class="text-muted">Uploading a new photo will replace the existing one.</small>
-                            @error('image')
+                            <input type="file" name="images[]" class="form-control @error('images') is-invalid @enderror" accept="image/*" multiple>
+                            <small class="text-muted">Uploading new photos will replace the existing ones.</small>
+                            @error('images')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
