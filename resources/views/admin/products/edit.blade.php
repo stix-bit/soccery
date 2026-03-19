@@ -77,15 +77,17 @@
                         <div class="mb-4">
                             <label class="form-label d-block">Photos</label>
                             @php
-                                $image = $product->images->first();
+                                $images = $product->images;
                             @endphp
-                            @if($image)
-                                <div class="mb-2">
-                                    <img src="{{ asset('storage/'.$image->img_path) }}" alt="{{ $product->name }}" class="rounded" style="width: 80px; height: 80px; object-fit: cover;">
-                                </div>
+                            @if($images->isNotEmpty())
+                                @foreach($images as $image)
+                                    <div class="mb-2">
+                                        <img src="{{ asset('storage/'.$image->img_path) }}" alt="{{ $product->name }}" class="rounded" style="width: 80px; height: 80px; object-fit: cover;">
+                                    </div>
+                                @endforeach
                             @endif
                             <input type="file" name="images[]" class="form-control @error('images') is-invalid @enderror" accept="image/*" multiple>
-                            <small class="text-muted">Uploading new photos will replace the existing ones.</small>
+                            <small class="text-muted">Uploading new photos will add to the existing ones.</small>
                             @error('images')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

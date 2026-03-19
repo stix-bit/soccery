@@ -88,12 +88,6 @@ class ProductController extends Controller
         $product->update($validated);
 
         if ($request->hasFile('images')) {
-            $oldImage = $product->images()->first();
-            if ($oldImage) {
-                Storage::disk('public')->delete($oldImage->img_path);
-                $oldImage->delete();
-            }
-
             foreach($request->file('images') as $image) {
                 $path = $image->store('products', 'public');
 
