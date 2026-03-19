@@ -11,8 +11,8 @@ MP1 Product/Service 20pts
 
 mp2 User CRUD 20pts
    User Registration with upload photo 5pts - Cedro ✅
-   User update profile and upload photo. 5pts - Cedro
-   list users on a datatable. 5pts - Sherwin ✅
+   User update profile and upload photo. 5pts - Cedro ✅
+   list users on a datatable. 5pts - Sherwin ✅ (FIX)
    admin can set the status of a user to active/inactive. update role of user. 5pts - Sherwin ✅
 
 mp3 20pts
