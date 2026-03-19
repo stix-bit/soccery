@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\DataTables\ProductDataTable;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -15,14 +16,9 @@ use Illuminate\View\View;
 
 class ProductController extends Controller
 {
-    public function index(): View
+    public function index(ProductDataTable $dataTable)
     {
-        $products = Product::with(['category', 'brand', 'images'])
-            ->withTrashed()
-            ->orderByDesc('id')
-            ->paginate(10);
-
-        return view('admin.products.index', compact('products'));
+         return $dataTable->render('admin.products.index');
     }
 
     public function create(): View

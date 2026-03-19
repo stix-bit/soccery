@@ -6,8 +6,8 @@ if you have a term test on other subjects that coincide with the time of the pro
 MP1 Product/Service 20pts
    Product/Service CRUD datatable 8pts - Cedro ✅
    Product/Service CRUDRestore datatable upload a single photo 10pts - Cedro ✅
-   Product/Service CRUDRestore datatable upload/view  multiple photos 15pts - Sherwin
-   Product/Service CRUDRestore datatable upload/view  multiple photos, import products on excel worksheet. 20pts -     Sherwin
+   Product/Service CRUDRestore datatable upload/view  multiple photos 15pts - Sherwin ✅
+   Product/Service CRUDRestore datatable upload/view  multiple photos, import products on excel worksheet. 20pts -     Sherwin 
 
 mp2 User CRUD 20pts
    User Registration with upload photo 5pts - Cedro ✅
