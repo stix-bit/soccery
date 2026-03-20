@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\UserDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -10,11 +11,9 @@ use Illuminate\View\View;
 
 class UserController extends Controller
 {
-    public function index(): View
+    public function index(UserDataTable $dataTable)
     {
-        $users = User::orderByDesc('id')->paginate(10);
-
-        return view('admin.users.index', compact('users'));
+        return $dataTable->render('admin.users.index');
     }
 
     public function updateStatus(Request $request, User $user): RedirectResponse

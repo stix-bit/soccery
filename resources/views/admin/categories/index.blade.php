@@ -16,67 +16,37 @@
         </div>
     @endif
 
-    <div class="card border-0 shadow-sm">
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table mb-0 align-middle">
-                    <thead class="table-light">
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Status</th>
-                            <th class="text-end">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($categories as $category)
-                            <tr @if($category->trashed()) class="table-warning" @endif>
-                                <td>{{ $category->id }}</td>
-                                
-                                <td>{{ $category->name }}</td>
-                                <td>{{ Str::limit($category->description, 60) }}</td>
-                                <td>
-                                    @if($category->trashed())
-                                        <span class="badge bg-warning text-dark">Archived</span>
-                                    @else
-                                        <span class="badge bg-success">Active</span>
-                                    @endif
-                                </td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm" role="group">
-                                        <a href="{{ route('admin.categories.edit', $category) }}" class="btn btn-outline-primary">Edit</a>
-                                        @if($category->trashed())
-                                            <form action="{{ route('admin.categories.restore', $category->id) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                <button type="submit" class="btn btn-outline-success">Restore</button>
-                                            </form>
-                                        @else
-                                            <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" class="d-inline" onsubmit="return confirm('Archive this category?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-outline-danger">Archive</button>
-                                            </form>
-                                        @endif
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="9" class="text-center text-muted py-4">
-                                    No categories found.
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
+    @if ($errors->has('import_file'))
+        <div class="alert alert-danger">
+            {{ $errors->first('import_file') }}
         </div>
+    @endif
 
-        <div class="card-footer bg-white border-0">
-            {{ $categories->links() }}
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <form action="{{ route('admin.categories.import') }}" method="POST" enctype="multipart/form-data" class="row g-2 align-items-end">
+                @csrf
+                <div class="col-md-8">
+                    <label for="categories-import-file" class="form-label mb-1">Import categories</label>
+                    <input id="categories-import-file" type="file" name="import_file" class="form-control" accept=".xlsx,.xls,.csv" required>
+                    <small class="text-muted">Columns: name, description (optional).</small>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-outline-primary w-100">Import file</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body">
+            {!! $dataTable->table(['class' => 'table table-bordered table-striped']) !!}
         </div>
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    {!! $dataTable->scripts() !!}
+@endpush
 

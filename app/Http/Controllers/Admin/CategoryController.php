@@ -2,25 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\CategoryDataTable;
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
+use App\Imports\CategoriesImport;
 use App\Models\Category;
-use App\Models\Product;
-use App\Models\ProductImage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CategoryController extends Controller
 {
-    public function index(): View
+    public function index(CategoryDataTable $dataTable)
     {
-        $categories = Category::withTrashed()
-            ->orderByDesc('id')
-            ->paginate(10);
-
-        return view('admin.categories.index', compact('categories'));
+        return $dataTable->render('admin.categories.index');
     }
 
     public function create(): View
@@ -82,5 +77,30 @@ class CategoryController extends Controller
 
         return redirect()->route('admin.categories.index')
             ->with('status', 'Category restored successfully.');
+    }
+
+    public function import(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'import_file' => ['required', 'file', 'mimes:xlsx,xls,csv', 'max:5120'],
+        ]);
+
+        $import = new CategoriesImport();
+
+        try {
+            Excel::import($import, $request->file('import_file'));
+        } catch (\Throwable $exception) {
+            return redirect()->route('admin.categories.index')
+                ->with('status', 'Category import failed. Please check your file format and headings.');
+        }
+
+        $failedRows = count($import->failures()) + count($import->errors());
+        $message = 'Categories imported successfully.';
+
+        if ($failedRows > 0) {
+            $message .= " {$failedRows} row(s) were skipped due to validation or processing errors.";
+        }
+
+        return redirect()->route('admin.categories.index')->with('status', $message);
     }
 }

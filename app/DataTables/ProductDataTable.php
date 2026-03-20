@@ -6,10 +6,7 @@ use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
-use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class ProductDataTable extends DataTable
@@ -61,31 +58,52 @@ class ProductDataTable extends DataTable
         })
         ->addColumn('category', fn($p) => $p->category?->name)
         ->addColumn('brand', fn($p) => $p->brand?->name)
+        ->addColumn('status', function ($product) {
+            if ($product->trashed()) {
+                return '<span class="badge bg-warning text-dark">Archived</span>';
+            }
+
+            return '<span class="badge bg-success">Active</span>';
+        })
         ->addColumn('action', function ($product) {
+            if ($product->trashed()) {
+                return '
+                <form action="'.route('admin.products.restore', $product->id).'"
+                    method="POST"
+                    style="display:inline-block">
+                    '.csrf_field().'
+                    <button type="submit" class="btn btn-sm btn-success">
+                        Restore
+                    </button>
+                </form>
+                ';
+            }
 
             return '
             <div class="d-flex flex-column gap-2">
-                <a href="'.route('admin.products.edit', $product->id).'" 
+                <a href="'.route('admin.products.edit', $product->id).'"
                 class="btn btn-sm btn-primary">
                 Edit
                 </a>
 
-                <form action="'.route('admin.products.destroy', $product->id).'" 
-                    method="POST" 
+                <form action="'.route('admin.products.destroy', $product->id).'"
+                    method="POST"
                     style="display:inline-block"
-                    onsubmit="return confirm(\'Are you sure?\')">
+                    onsubmit="return confirm(\'Archive this product?\')">
 
                     '.csrf_field().'
                     '.method_field('DELETE').'
 
                     <button type="submit" class="btn btn-sm btn-danger">
-                        Delete
+                        Archive
                     </button>
                 </form>
             </div>
             ';
         })
-        ->rawColumns(['image', 'action'])
+        ->editColumn('created_at', fn($product) => $product->created_at?->format('M d, Y h:i A') ?? '-')
+        ->editColumn('updated_at', fn($product) => $product->updated_at?->format('M d, Y h:i A') ?? '-')
+        ->rawColumns(['image', 'status', 'action'])
         ->setRowId('id');
     }
 
@@ -96,7 +114,7 @@ class ProductDataTable extends DataTable
      */
     public function query(Product $model): QueryBuilder
     {
-        return $model->newQuery()->with(['category', 'brand', 'images']);
+        return $model->newQuery()->withTrashed()->with(['category', 'brand', 'images']);
     }
 
     /**
@@ -108,7 +126,7 @@ class ProductDataTable extends DataTable
                     ->setTableId('products')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->orderBy(1)
+                    ->orderBy(1, 'desc')
                     ->selectStyleSingle()
                     ->dom('Bfrtip')
                     ->buttons(['pdf', 'excel', 'csv', 'reload', 'print']);
@@ -128,9 +146,14 @@ class ProductDataTable extends DataTable
             Column::make('stock'),
             Column::make('category'),
             Column::make('brand'),
+            Column::computed('status')
+                ->title('Status')
+                ->exportable(false)
+                ->printable(false),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')
+                ->title('Action')
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)

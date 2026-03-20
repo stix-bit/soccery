@@ -2,25 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\BrandDataTable;
 use App\Http\Controllers\Controller;
+use App\Imports\BrandsImport;
 use App\Models\Brand;
-use App\Models\Category;
-use App\Models\Product;
-use App\Models\ProductImage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BrandController extends Controller
 {
-    public function index(): View
+    public function index(BrandDataTable $dataTable)
     {
-        $brands = Brand::withTrashed()
-            ->orderByDesc('id')
-            ->paginate(10);
-
-        return view('admin.brands.index', compact('brands'));
+        return $dataTable->render('admin.brands.index');
     }
 
     public function create(): View
@@ -82,5 +77,30 @@ class BrandController extends Controller
 
         return redirect()->route('admin.brands.index')
             ->with('status', 'Brand restored successfully.');
+    }
+
+    public function import(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'import_file' => ['required', 'file', 'mimes:xlsx,xls,csv', 'max:5120'],
+        ]);
+
+        $import = new BrandsImport();
+
+        try {
+            Excel::import($import, $request->file('import_file'));
+        } catch (\Throwable $exception) {
+            return redirect()->route('admin.brands.index')
+                ->with('status', 'Brand import failed. Please check your file format and headings.');
+        }
+
+        $failedRows = count($import->failures()) + count($import->errors());
+        $message = 'Brands imported successfully.';
+
+        if ($failedRows > 0) {
+            $message .= " {$failedRows} row(s) were skipped due to validation or processing errors.";
+        }
+
+        return redirect()->route('admin.brands.index')->with('status', $message);
     }
 }

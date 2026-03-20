@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\UserController;
@@ -17,14 +18,23 @@ Route::get('/', [ShopController::class, 'index'])->name('landing');
 
 Auth::routes();
 
+Route::get('email/verify', [VerificationController::class, 'show'])->name('verification.notice');
+Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
+    ->middleware(['signed', 'throttle:6,1'])
+    ->name('verification.verify');
+Route::post('email/resend', [VerificationController::class, 'resend'])
+    ->middleware('throttle:6,1')
+    ->name('verification.resend');
+
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/search', [ProductSearchController::class, 'index'])->name('search.index');
 
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [HomeController::class, 'adminDashboard'])->name('dashboard');
 
     Route::resource('products', ProductController::class);
+    Route::post('products/import', [ProductController::class, 'import'])->name('products.import');
     Route::post('products/{product}/restore', [ProductController::class, 'restore'])->name('products.restore');
     Route::delete('product-images/{image}', [ProductController::class, 'deleteImage'])->name('products.deleteImage');
 
@@ -36,13 +46,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.status');
 
     Route::resource('brands', BrandController::class);
+    Route::post('brands/import', [BrandController::class, 'import'])->name('brands.import');
     Route::post('brands/{brand}/restore', [BrandController::class, 'restore'])->name('brands.restore');
 
     Route::resource('categories', CategoryController::class);
+    Route::post('categories/import', [CategoryController::class, 'import'])->name('categories.import');
     Route::post('categories/{category}/restore', [CategoryController::class, 'restore'])->name('categories.restore');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
     Route::post('/purchase/{product}', [CheckoutController::class, 'purchase'])->name('purchase.product');
 

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
 
 class RegisterController extends Controller
 {
@@ -30,7 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/shop';
+    protected $redirectTo = '/email/verify';
 
     /**
      * Create a new controller instance.
@@ -87,7 +88,7 @@ class RegisterController extends Controller
     /**
      * Override register to handle file upload.
      */
-    public function register(Request $request)
+    public function register(Request $request): RedirectResponse
     {
         $this->validator($request->all())->validate();
 
@@ -98,9 +99,7 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($data)));
 
-        $this->guard()->login($user);
-
         return $this->registered($request, $user)
-            ?: redirect($this->redirectPath());
+            ?: redirect()->route('verification.notice')->with('email', $user->email);
     }
 }

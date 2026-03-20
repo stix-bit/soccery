@@ -7,7 +7,7 @@ MP1 Product/Service 20pts
    Product/Service CRUD datatable 8pts - Cedro ✅
    Product/Service CRUDRestore datatable upload a single photo 10pts - Cedro ✅
    Product/Service CRUDRestore datatable upload/view  multiple photos 15pts - Sherwin ✅
-   Product/Service CRUDRestore datatable upload/view  multiple photos, import products on excel worksheet. 20pts -     Sherwin 
+   Product/Service CRUDRestore datatable upload/view  multiple photos, import products on excel worksheet. 20pts -     Sherwin ✅
 
 mp2 User CRUD 20pts
    User Registration with upload photo 5pts - Cedro ✅
@@ -16,7 +16,7 @@ mp2 User CRUD 20pts
    admin can set the status of a user to active/inactive. update role of user. 5pts - Sherwin ✅
 
 mp3 20pts
-   authentication. send an email verification after registration. only verified users can login. - Sherwin
+   authentication. send an email verification after registration. only verified users can login. - Sherwin ✅
    admin routes should be protected from unauthenticated and unauthorized (not admin role) users. 20pts- Sherwin ✅
 
 mp4 Product review CRUD 20pts

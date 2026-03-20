@@ -2,25 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\OrderDataTable;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Models\Order;
-use App\Models\OrderItem;
-use App\Models\Product;
-use App\Models\ProductImage;
+use App\Mail\OrderStatusUpdatedMail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\View\View;
-use App\Mail\OrderStatusUpdatedMail;
 use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
-    public function index(): View
+    public function index(OrderDataTable $dataTable)
     {
-        $orders = Order::orderByDesc('id')->paginate(10);
-        return view('admin.orders.index', compact('orders'));
+        return $dataTable->render('admin.orders.index');
     }
 
     public function updateStatus(Request $request, Order $order): RedirectResponse

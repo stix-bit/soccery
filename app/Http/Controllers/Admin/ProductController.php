@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\DataTables\ProductDataTable;
+use App\Imports\ProductsImport;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -12,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class ProductController extends Controller
@@ -113,6 +115,31 @@ class ProductController extends Controller
 
         return redirect()->route('admin.products.index')
             ->with('status', 'Product restored successfully.');
+    }
+
+    public function import(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'import_file' => ['required', 'file', 'mimes:xlsx,xls,csv', 'max:5120'],
+        ]);
+
+        $import = new ProductsImport();
+
+        try {
+            Excel::import($import, $request->file('import_file'));
+        } catch (\Throwable $exception) {
+            return redirect()->route('admin.products.index')
+                ->with('status', 'Product import failed. Please check your file format and headings.');
+        }
+
+        $failedRows = count($import->failures()) + count($import->errors());
+        $message = 'Products imported successfully.';
+
+        if ($failedRows > 0) {
+            $message .= " {$failedRows} row(s) were skipped due to validation or processing errors.";
+        }
+
+        return redirect()->route('admin.products.index')->with('status', $message);
     }
 
     public function deleteImage(ProductImage $image): RedirectResponse
