@@ -55,6 +55,16 @@
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="{{ route('shop.index') }}">Shop</a>
                             </li>
+                            @if(auth()->user()->role === 'customer')
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="{{ route('cart.index') }}">
+                                        Cart ({{ array_sum(session('cart', [])) }})
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="{{ route('checkout.index') }}">Checkout</a>
+                                </li>
+                            @endif
                         @else
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="{{ route('landing') }}">Shop</a>

@@ -2,6 +2,14 @@
 
 @section('content')
 <div class="container">
+    @if (session('status'))
+        <div class="alert alert-success">{{ session('status') }}</div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
+
     <div class="row align-items-center mb-4">
         <div class="col-md-8">
             <h1 class="fw-bold text-primary mb-1">Soccery Shop</h1>
@@ -60,18 +68,7 @@
                         <p class="text-muted small mb-2">{{ Str::limit($product->description, 60) }}</p>
                         <div class="mt-auto d-flex justify-content-between align-items-center">
                             <span class="fw-semibold text-primary">£{{ number_format($product->price, 2) }}</span>
-                            @auth
-                                @if(Auth::user()->role === 'customer')
-                                    <form action="{{ route('purchase.product', $product) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        <input type="hidden" name="quantity" value="1">
-                                        <input type="hidden" name="payment_method" value="online">
-                                        <button type="submit" class="btn btn-sm btn-primary">Buy now</button>
-                                    </form>
-                                @endif
-                            @else
-                                <a href="{{ route('login') }}" class="btn btn-sm btn-outline-primary">Login to buy</a>
-                            @endauth
+                            <a href="{{ route('shop.show', $product) }}" class="btn btn-sm btn-primary">Buy now</a>
                         </div>
                     </div>
                 </div>

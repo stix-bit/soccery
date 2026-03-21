@@ -59,7 +59,8 @@
             <div class="card border-0 shadow-sm h-100">
                 <div class="card-body">
                     <h5 class="card-title text-primary">Sales Charts</h5>
-                    <p class="card-text text-muted">Placeholder</p>
+                    <p class="card-text text-muted">View sales trends and product contribution.</p>
+                    <a href="{{ route('admin.charts.index') }}" class="btn btn-primary btn-sm">View charts</a>
                 </div>
             </div>
         </div>
