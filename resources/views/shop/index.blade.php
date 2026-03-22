@@ -15,14 +15,6 @@
             <h1 class="fw-bold text-primary mb-1">Soccery Shop</h1>
             <p class="text-muted mb-0">Premier League kits, scarves, and more.</p>
         </div>
-        <div class="col-md-4 text-md-end mt-3 mt-md-0">
-            @auth
-                <a href="{{ route('home') }}" class="btn btn-outline-primary btn-sm">Go to dashboard</a>
-            @else
-                <!-- <a href="{{ route('login') }}" class="btn btn-primary btn-sm me-2">Login</a>
-                <a href="{{ route('register') }}" class="btn btn-outline-primary btn-sm">Register</a> -->
-            @endauth
-        </div>
     </div>
 
     <div class="row g-3">
@@ -67,7 +59,7 @@
                         <h6 class="card-title mb-1">{{ $product->name }}</h6>
                         <p class="text-muted small mb-2">{{ Str::limit($product->description, 60) }}</p>
                         <div class="mt-auto d-flex justify-content-between align-items-center">
-                            <span class="fw-semibold text-primary">£{{ number_format($product->price, 2) }}</span>
+                            <span class="fw-semibold text-primary">&#8369;{{ number_format($product->price, 2) }}</span>
                             <a href="{{ route('shop.show', $product) }}" class="btn btn-sm btn-primary">Buy now</a>
                         </div>
                     </div>

@@ -20,10 +20,9 @@ mp3 20pts
    admin routes should be protected from unauthenticated and unauthorized (not admin role) users. 20pts- Sherwin ✅
 
 mp4 Product review CRUD 20pts
-   customers that bought a product or service can post a review/comment and rating on that service or product. 8pts -    Cedro
-   customers that bought a product or service can post and update a review/comment and rating on that service or product. 10pts - Cedro
-   list all reviews on a datatable. 5pts - Sherwin
-   the administrator can delete user reviews. 5pts - Sherwin
+   customers that bought a product or service can post and update a review/comment and rating on that service or product. 10pts - Cedro ✅
+   list all reviews on a datatable. 5pts - Sherwin ✅
+   the administrator can delete user reviews. 5pts - Sherwin ✅
 
 mp5 validation 15pts
    form validation add/edit product/service. user registration validation 15pts ✅

@@ -40,8 +40,8 @@
                     <td>{{ optional($item['product']->brand)->name ?? '-' }}</td>
                     <td>{{ optional($item['product']->category)->name ?? '-' }}</td>
                     <td>{{ $item['quantity'] }}</td>
-                    <td>£{{ number_format((float) $item['product']->price, 2) }}</td>
-                    <td>£{{ number_format((float) $item['line_total'], 2) }}</td>
+                    <td>&#8369;{{ number_format((float) $item['product']->price, 2) }}</td>
+                    <td>&#8369;{{ number_format((float) $item['line_total'], 2) }}</td>
                 </tr>
             @endforeach
         </tbody>
@@ -49,7 +49,7 @@
 
     <p style="margin-top:16px;">Order status: <strong>{{ ucfirst(str_replace('_', ' ', $order->status)) }}</strong></p>
     <p style="margin-top:16px;">Payment method: <strong>{{ ucfirst(str_replace('_',' ', $order->payment_method)) }}</strong></p>
-    <p style="margin-top:8px;">Order total: <strong>£{{ number_format((float) $total, 2) }}</strong></p>
+    <p style="margin-top:8px;">Order total: <strong>&#8369;{{ number_format((float) $total, 2) }}</strong></p>
     <p style="margin-top:8px;">Your PDF receipt is attached to this email.</p>
     <p style="margin-top:24px;">Best regards,<br>Soccery Team</p>
 </body>

@@ -20,7 +20,16 @@ class ShopController extends Controller
 
     public function show(Product $product): View
     {
-        $product->load(['images', 'brand', 'category', 'reviews.user']);
+        $product->load([
+            'images',
+            'brand',
+            'category',
+            'reviews' => function ($query) {
+                $query->whereNull('reviews.deleted_at')
+                    ->with('user')
+                    ->latest();
+            },
+        ]);
 
         $canReview = false;
         $userReview = null;

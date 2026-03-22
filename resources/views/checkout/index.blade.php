@@ -63,14 +63,14 @@
                                 <td>{{ optional($item['product']->brand)->name ?? '-' }}</td>
                                 <td>{{ optional($item['product']->category)->name ?? '-' }}</td>
                                 <td>{{ $item['quantity'] }}</td>
-                                <td>£{{ number_format((float) $item['product']->price, 2) }}</td>
-                                <td>£{{ number_format((float) $item['line_total'], 2) }}</td>
+                                <td>&#8369;{{ number_format((float) $item['product']->price, 2) }}</td>
+                                <td>&#8369;{{ number_format((float) $item['line_total'], 2) }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-            <h5 class="mb-0 text-end">Total: £{{ number_format((float) $total, 2) }}</h5>
+            <h5 class="mb-0 text-end">Total: &#8369;{{ number_format((float) $total, 2) }}</h5>
         </div>
     </div>
 

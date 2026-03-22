@@ -63,7 +63,7 @@
                     <p class="text-muted mb-1"><strong>Brand:</strong> {{ optional($product->brand)->name ?? '-' }}</p>
                     <p class="text-muted mb-3"><strong>Category:</strong> {{ optional($product->category)->name ?? '-' }}</p>
 
-                    <h4 class="fw-semibold mb-3">£{{ number_format((float) $product->price, 2) }}</h4>
+                    <h4 class="fw-semibold mb-3">&#8369;{{ number_format((float) $product->price, 2) }}</h4>
 
                     <p class="mb-3" style="white-space: pre-line;">{{ $product->description }}</p>
 
@@ -123,20 +123,18 @@
                         @csrf
                         <div class="mb-2">
                             <label class="form-label small">Rating</label>
-                            <div class="d-flex gap-1">
-                                @for($i = 1; $i <= 5; $i++)
-                                    <div class="form-check">
-                                        <input
-                                            class="form-check-input"
-                                            type="radio"
-                                            name="rating"
-                                            id="rating{{ $i }}"
-                                            value="{{ $i }}"
-                                            {{ old('rating', $userReview?->rating ?? 0) == $i ? 'checked' : '' }}
-                                            required
-                                        >
-                                        <label class="form-check-label" for="rating{{ $i }}">{{ $i }} star{{ $i > 1 ? 's' : '' }}</label>
-                                    </div>
+                            <div class="d-flex flex-row-reverse justify-content-end gap-1">
+                                @for($i = 5; $i >= 1; $i--)
+                                    <input
+                                        class="btn-check"
+                                        type="radio"
+                                        name="rating"
+                                        id="rating{{ $i }}"
+                                        value="{{ $i }}"
+                                        {{ old('rating', $userReview?->rating ?? 0) == $i ? 'checked' : '' }}
+                                        required
+                                    >
+                                    <label class="btn btn-outline-warning px-2" for="rating{{ $i }}" title="{{ $i }} star{{ $i > 1 ? 's' : '' }}">★</label>
                                 @endfor
                             </div>
                             @error('rating')

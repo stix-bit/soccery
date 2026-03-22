@@ -51,7 +51,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-white" href="{{ route('admin.dashboard') }}">Dashboard</a>
                                 </li>
-                            @endif
+                            @endif  
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="{{ route('shop.index') }}">Shop</a>
                             </li>

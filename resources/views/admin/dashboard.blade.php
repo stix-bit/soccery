@@ -58,6 +58,15 @@
         <div class="col-md-4">
             <div class="card border-0 shadow-sm h-100">
                 <div class="card-body">
+                    <h5 class="card-title text-primary">Reviews</h5>
+                    <p class="card-text text-muted">View and manage customer reviews.</p>
+                    <a href="{{ route('admin.reviews.index') }}" class="btn btn-primary btn-sm">Manage reviews</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
                     <h5 class="card-title text-primary">Sales Charts</h5>
                     <p class="card-text text-muted">View sales trends and product contribution.</p>
                     <a href="{{ route('admin.charts.index') }}" class="btn btn-primary btn-sm">View charts</a>

@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ChartController;
+use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -47,6 +48,10 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
 
     Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
     Route::post('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.status');
+    Route::get('reviews', [AdminReviewController::class, 'index'])->name('reviews.index');
+    Route::delete('reviews/{review}', [AdminReviewController::class, 'destroy'])->name('reviews.destroy');
+    Route::post('reviews/{review}/restore', [AdminReviewController::class, 'restore'])->name('reviews.restore');
+    Route::delete('reviews/{review}/force', [AdminReviewController::class, 'forceDestroy'])->name('reviews.forceDestroy');
     Route::get('charts', [ChartController::class, 'index'])->name('charts.index');
 
     Route::resource('brands', BrandController::class);

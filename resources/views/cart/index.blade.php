@@ -77,8 +77,8 @@
                                         >
                                     </form>
                                 </td>
-                                <td>£{{ number_format((float) $item['product']->price, 2) }}</td>
-                                <td>£{{ number_format((float) $item['line_total'], 2) }}</td>
+                                <td>&#8369;{{ number_format((float) $item['product']->price, 2) }}</td>
+                                <td>&#8369;{{ number_format((float) $item['line_total'], 2) }}</td>
                                 <td>
                                     <form action="{{ route('cart.remove', $item['product']) }}" method="POST">
                                         @csrf
@@ -94,7 +94,7 @@
         </div>
 
         <div class="d-flex justify-content-between align-items-center">
-            <h4 class="mb-0">Total: £{{ number_format((float) $total, 2) }}</h4>
+            <h4 class="mb-0">Total: &#8369;{{ number_format((float) $total, 2) }}</h4>
             <a href="{{ route('checkout.index') }}" class="btn btn-primary">Proceed to checkout</a>
         </div>
     @endif
