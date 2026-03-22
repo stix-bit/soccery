@@ -109,5 +109,97 @@
             </div>
         </div>
     </div>
+
+    {{-- Reviews section --}}
+    <div class="card border-0 shadow-sm mt-4">
+        <div class="card-body p-4">
+            <h5 class="fw-bold mb-3">Reviews</h5>
+
+            @if($canReview)
+                <div class="border rounded p-3 mb-4 bg-light">
+                    <h6 class="mb-2">{{ $userReview ? 'Update your review' : 'Write a review' }}</h6>
+                    <p class="text-muted small mb-2">Only customers who purchased this product can leave a review.</p>
+                    <form action="{{ route('reviews.store', $product) }}" method="POST">
+                        @csrf
+                        <div class="mb-2">
+                            <label class="form-label small">Rating</label>
+                            <div class="d-flex gap-1">
+                                @for($i = 1; $i <= 5; $i++)
+                                    <div class="form-check">
+                                        <input
+                                            class="form-check-input"
+                                            type="radio"
+                                            name="rating"
+                                            id="rating{{ $i }}"
+                                            value="{{ $i }}"
+                                            {{ old('rating', $userReview?->rating ?? 0) == $i ? 'checked' : '' }}
+                                            required
+                                        >
+                                        <label class="form-check-label" for="rating{{ $i }}">{{ $i }} star{{ $i > 1 ? 's' : '' }}</label>
+                                    </div>
+                                @endfor
+                            </div>
+                            @error('rating')
+                                <span class="text-danger small">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="mb-2">
+                            <label for="comment" class="form-label small">Comment (optional)</label>
+                            <textarea
+                                id="comment"
+                                name="comment"
+                                class="form-control @error('comment') is-invalid @enderror"
+                                rows="3"
+                                maxlength="2000"
+                                placeholder="Share your thoughts..."
+                            >{{ old('comment', $userReview?->comment ?? '') }}</textarea>
+                            @error('comment')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm">{{ $userReview ? 'Update review' : 'Post review' }}</button>
+                    </form>
+                </div>
+            @elseif(auth()->check() && auth()->user()->role === 'customer')
+                <p class="text-muted small mb-3">You must purchase this product to leave a review.</p>
+            @endif
+
+            @php $reviews = $product->reviews; @endphp
+            @if($reviews->count() > 0)
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    @php
+                        $avgRating = round($reviews->avg('rating'), 1);
+                        $fullStars = (int) floor($avgRating);
+                        $halfStar = $avgRating - $fullStars >= 0.5;
+                    @endphp
+                    <span class="text-warning" title="Average: {{ $avgRating }}/5">
+                        @for($i = 0; $i < $fullStars; $i++) ★ @endfor
+                        @if($halfStar) ½ @endif
+                    </span>
+                    <span class="text-muted small">{{ $avgRating }}/5 ({{ $reviews->count() }} review{{ $reviews->count() > 1 ? 's' : '' }})</span>
+                </div>
+                <ul class="list-unstyled mb-0">
+                    @foreach($reviews as $review)
+                        <li class="border-bottom py-3 {{ !$loop->last ? '' : 'border-bottom-0' }}">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <span class="text-warning">
+                                        @for($i = 0; $i < (int) $review->rating; $i++) ★ @endfor
+                                    </span>
+                                    <span class="fw-semibold ms-1">{{ optional($review->user)->first_name ?? 'User' }} {{ optional($review->user)->last_name ?? '' }}</span>
+                                </div>
+                                <span class="text-muted small">{{ $review->created_at->diffForHumans() }}</span>
+                            </div>
+                            @if($review->comment)
+                                <p class="mb-0 mt-1 text-muted small">{{ $review->comment }}</p>
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
+            @else
+                <p class="text-muted mb-0">No reviews yet. Be the first to review after purchasing!</p>
+            @endif
+        </div>
+    </div>
 </div>
 @endsection

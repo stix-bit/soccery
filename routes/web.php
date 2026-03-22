@@ -14,6 +14,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductSearchController;
+use App\Http\Controllers\ReviewController;
 
 Route::get('/', [ShopController::class, 'index'])->name('landing');
 
@@ -71,4 +72,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+    Route::post('/shop/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 });
