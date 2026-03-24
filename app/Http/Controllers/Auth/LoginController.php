@@ -61,6 +61,8 @@ class LoginController extends Controller
             ]);
         }
 
-        return parent::sendFailedLoginResponse($request);
+        throw ValidationException::withMessages([
+            $this->username() => [trans('auth.failed')],
+        ]);
     }
 }

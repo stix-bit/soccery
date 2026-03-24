@@ -8,9 +8,9 @@
             <p class="text-white mb-0" style="opacity: 0.9;">Confirm order details and payment method.</p>
         </div>
 
-    @if (session('status'))
+    <!-- @if (session('status'))
         <div class="alert alert-success">{{ session('status') }}</div>
-    @endif
+    @endif -->
 
     @if (session('error'))
         <div class="alert alert-danger">{{ session('error') }}</div>

@@ -99,6 +99,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-white" href="{{ route('checkout.index') }}">Checkout</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="{{ route('user.orders') }}">My Orders</a>
+                                </li>
                             @endif
                         @else
                             <li class="nav-item">

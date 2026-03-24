@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\OrderReceiptMail;
 use App\Models\Order;
-use App\Models\OrderItem;
+use App\Models\OrderProduct;
 use App\Models\Product;
 use Dompdf\Dompdf;
 use Illuminate\Http\RedirectResponse;
@@ -147,7 +147,7 @@ class CheckoutController extends Controller
                         throw new RuntimeException('One or more items no longer have enough stock. Please review your cart.');
                     }
 
-                    OrderItem::create([
+                    OrderProduct::create([
                         'order_id' => $newOrder->id,
                         'product_id' => $productId,
                         'quantity' => $quantity,
@@ -186,7 +186,21 @@ class CheckoutController extends Controller
 
         session()->forget(self::CART_SESSION_KEY);
 
-        return redirect()->route('home')->with('status', 'Transaction completed! A receipt PDF has been emailed to you.');
+        return redirect()->route('user.orders')->with('status', 'Transaction completed! A receipt PDF has been emailed to you.');
+    }
+
+    public function myOrders(): View
+    {
+        $this->ensureCustomer();
+
+        $orders = Order::with(['items.product.images'])
+            ->where('user_id', Auth::id())
+            ->latest()
+            ->get();
+
+        return view('user.order', [
+            'orders' => $orders,
+        ]);
     }
 
     private function ensureCustomer(): void

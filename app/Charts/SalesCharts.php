@@ -10,13 +10,13 @@ class SalesCharts
 {
     public function buildSalesBarChart(Carbon $startDate, Carbon $endDate): Chart
     {
-        $dailyRows = DB::table('order_items')
-            ->join('orders', 'orders.id', '=', 'order_items.order_id')
-            ->join('products', 'products.id', '=', 'order_items.product_id')
+        $dailyRows = DB::table('order_product')
+            ->join('orders', 'orders.id', '=', 'order_product.order_id')
+            ->join('products', 'products.id', '=', 'order_product.product_id')
             ->where('orders.status', '!=', 'cancelled')
             ->whereBetween('orders.created_at', [$startDate, $endDate])
             ->selectRaw('DATE(orders.created_at) as sale_date')
-            ->selectRaw('SUM(order_items.quantity * products.price) as total_sales')
+            ->selectRaw('SUM(order_product.quantity * products.price) as total_sales')
             ->groupBy('sale_date')
             ->orderBy('sale_date')
             ->get()
@@ -55,13 +55,13 @@ class SalesCharts
 
     public function buildProductPieChart(Carbon $startDate, Carbon $endDate, ?int $limit = null): Chart
     {
-        $query = DB::table('order_items')
-            ->join('orders', 'orders.id', '=', 'order_items.order_id')
-            ->join('products', 'products.id', '=', 'order_items.product_id')
+        $query = DB::table('order_product')
+            ->join('orders', 'orders.id', '=', 'order_product.order_id')
+            ->join('products', 'products.id', '=', 'order_product.product_id')
             ->where('orders.status', '!=', 'cancelled')
             ->whereBetween('orders.created_at', [$startDate, $endDate])
             ->selectRaw('products.name as product_name')
-            ->selectRaw('SUM(order_items.quantity * products.price) as total_sales')
+            ->selectRaw('SUM(order_product.quantity * products.price) as total_sales')
             ->groupBy('products.id', 'products.name')
             ->orderByDesc('total_sales');
 
