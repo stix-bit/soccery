@@ -1,6 +1,32 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    .rating-input {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+        gap: 0.35rem;
+    }
+
+    .rating-input input {
+        display: none;
+    }
+
+    .rating-input label {
+        cursor: pointer;
+        font-size: 1.5rem;
+        line-height: 1;
+        color: #d1d5db;
+        transition: color 0.15s ease-in-out;
+    }
+
+    .rating-input input:checked ~ label,
+    .rating-input label:hover,
+    .rating-input label:hover ~ label {
+        color: #f59e0b;
+    }
+</style>
 <div class="container">
     @if (session('status'))
         <div class="alert alert-success">{{ session('status') }}</div>
@@ -128,18 +154,17 @@
                             @csrf
                             <div class="mb-2">
                                 <label class="form-label small">Rating</label>
-                                <div class="d-flex flex-row-reverse justify-content-end gap-1">
+                                <div class="rating-input">
                                     @for($i = 5; $i >= 1; $i--)
                                         <input
-                                            class="btn-check"
                                             type="radio"
                                             name="rating"
-                                            id="rating{{ $i }}"
+                                            id="rating-{{ $product->id }}-{{ $i }}"
                                             value="{{ $i }}"
                                             {{ old('rating', $userReview?->rating ?? 0) == $i ? 'checked' : '' }}
                                             required
                                         >
-                                        <label class="btn btn-outline-warning px-2" for="rating{{ $i }}" title="{{ $i }} star{{ $i > 1 ? 's' : '' }}">★</label>
+                                        <label for="rating-{{ $product->id }}-{{ $i }}" title="{{ $i }} star{{ $i > 1 ? 's' : '' }}">★</label>
                                     @endfor
                                 </div>
                                 @error('rating')

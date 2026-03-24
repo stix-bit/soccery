@@ -74,11 +74,13 @@
 
                         <div class="mb-4">
                             <label class="form-label">Photos</label>
-                            <input type="file" name="images[]" multiple class="form-control @error('image') is-invalid @enderror" accept="image/*">
+                            <input id="images" type="file" name="images[]" multiple class="form-control @error('image') is-invalid @enderror" accept="image/*">
 
                             @error('image')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
+
+                            <div id="image-preview" class="d-flex flex-wrap gap-2 mt-3"></div>
                         </div>
 
                         <div class="d-flex justify-content-between">
@@ -92,4 +94,43 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const input = document.getElementById('images');
+    const preview = document.getElementById('image-preview');
+
+    if (!input || !preview) {
+        return;
+    }
+
+    input.addEventListener('change', function () {
+        preview.innerHTML = '';
+
+        Array.from(input.files || []).forEach(function (file) {
+            if (!file.type.startsWith('image/')) {
+                return;
+            }
+
+            const url = URL.createObjectURL(file);
+            const img = document.createElement('img');
+            img.src = url;
+            img.alt = file.name;
+            img.style.width = '88px';
+            img.style.height = '88px';
+            img.style.objectFit = 'cover';
+            img.style.borderRadius = '8px';
+            img.style.border = '1px solid #000';
+
+            img.addEventListener('load', function () {
+                URL.revokeObjectURL(url);
+            });
+
+            preview.appendChild(img);
+        });
+    });
+});
+</script>
+@endpush
 
