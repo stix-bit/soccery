@@ -2,14 +2,16 @@
 
 @section('content')
 <div class="container">
-    <div class="row mb-4">
-        <div class="col">
-            <h1 class="fw-bold text-primary">Admin Dashboard</h1>
-            <p class="text-muted">Manage products, users, and monitor Soccery performance.</p>
+    <div class="p-4 p-md-5 rounded-4" style="background: linear-gradient(90deg, #6b21a8, #a855f7);">
+        <div class="row mb-4">
+            <div class="col">
+                <h1 class="fw-bold text-white">Admin Dashboard</h1>
+                <p class="text-white-50">Manage products, users, and monitor Soccery performance.</p>
+            </div>
         </div>
     </div>
 
-    <div class="row g-3">
+    <div class="row g-3 mt-4">
         <div class="col-md-4">
             <div class="card border-0 shadow-sm h-100">
                 <div class="card-body">

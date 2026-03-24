@@ -31,13 +31,48 @@
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 
+    @php
+        $isLogin = request()->routeIs('login', 'register');
+        $isAdmin = request()->routeIs('admin.*');
+        $backgroundImage = $isLogin ? 'background2.jpg' : ($isAdmin ? 'background3.jpg' : 'background.jpeg');
+        $showBackground = $isLogin || $isAdmin || !request()->routeIs('login', 'register', 'admin.*');
+        $hasOverlay = !$isLogin && !$isAdmin;
+        $backgroundImageUrl = $showBackground ? asset('storage/' . $backgroundImage) : '';
+    @endphp
+
+    <style>
+        body.site-background {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body.site-background-with-overlay::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.58);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body.site-background #app {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+
     
 </head>
-<body>
+<body class="{{ $showBackground ? 'site-background' : '' }} {{ $hasOverlay ? 'site-background-with-overlay' : '' }}" @if($showBackground) style="background-image: url('{{ $backgroundImageUrl }}');background-size: cover;background-position: center;background-repeat: no-repeat;background-attachment: fixed;" @endif>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light shadow-sm" style="background: linear-gradient(90deg,#6b21a8,#a855f7);">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/') }}" style="display: flex; align-items: center; gap: 0.5rem;">
+                    <img src="{{ asset('storage/Premier_League_Logomod.png') }}" alt="Premier League Logo" style="height: 40px; width: auto;">
                     <span class="fw-bold text-white">Soccery</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

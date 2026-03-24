@@ -2,17 +2,19 @@
 
 @section('content')
 <div class="container">
-    <div class="row mb-4">
-        <div class="col-md-8">
-            <h1 class="fw-bold text-primary mb-1">Sales Charts</h1>
-            <p class="text-muted mb-0">Review sales trends and product contribution by date range.</p>
-        </div>
-        <div class="col-md-4 text-md-end mt-3 mt-md-0">
-            <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-secondary btn-sm">Back to dashboard</a>
+    <div class="p-4 p-md-5 rounded-4" style="background: linear-gradient(90deg, #6b21a8, #a855f7);">
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <h1 class="fw-bold text-white mb-1">Sales Charts</h1>
+                <p class="text-white-50 mb-0">Review sales trends and product contribution by date range.</p>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <a href="{{ route('admin.dashboard') }}" class="btn btn-light btn-sm">Back to dashboard</a>
+            </div>
         </div>
     </div>
 
-    <div class="card border-0 shadow-sm mb-4">
+    <div class="card rounded-4 shadow-sm mt-4 mb-4" style="border: 1px solid #000; overflow: hidden;">
         <div class="card-body">
             <form method="GET" action="{{ route('admin.charts.index') }}" class="row g-3 align-items-end">
                 <div class="col-md-4">
@@ -45,9 +47,9 @@
         </div>
     </div>
 
-    <div class="row g-3">
+    <div class="row g-3 mt-0">
         <div class="col-lg-8">
-            <div class="card border-0 shadow-sm h-100">
+            <div class="card rounded-4 shadow-sm h-100" style="border: 1px solid #000; overflow: hidden;">
                 <div class="card-body">
                     <h5 class="fw-semibold text-primary">Sales Bar Chart</h5>
                     <p class="text-muted small mb-3">Daily sales amount in selected range.</p>
@@ -59,7 +61,7 @@
         </div>
 
         <div class="col-lg-4">
-            <div class="card border-0 shadow-sm h-100">
+            <div class="card rounded-4 shadow-sm h-100" style="border: 1px solid #000; overflow: hidden;">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <h5 class="fw-semibold text-primary mb-0">Product Sales Share</h5>

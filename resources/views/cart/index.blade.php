@@ -2,12 +2,13 @@
 
 @section('content')
 <div class="container">
+    <div class="p-4 p-md-5 rounded-4" style="background: linear-gradient(90deg, #6b21a8, #a855f7);">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div>
-            <h1 class="fw-bold text-primary mb-1">Your Cart</h1>
-            <p class="text-muted mb-0">Review your selected items before checkout.</p>
+            <h1 class="fw-bold text-white mb-1">Your Cart</h1>
+            <p class="text-white mb-0" style="opacity: 0.9;">Review your selected items before checkout.</p>
         </div>
-        <a href="{{ route('shop.index') }}" class="btn btn-outline-secondary">Continue shopping</a>
+        <a href="{{ route('shop.index') }}" class="btn btn-outline-light">Continue shopping</a>
     </div>
 
     @if (session('status'))
@@ -23,7 +24,7 @@
             Your cart is empty.
         </div>
     @else
-        <div class="card border-0 shadow-sm mb-3">
+        <div class="card rounded-4 shadow-sm mb-3" style="border: 1px solid #000; overflow: hidden;">
             <div class="table-responsive">
                 <table class="table mb-0 align-middle">
                     <thead>
@@ -94,10 +95,11 @@
         </div>
 
         <div class="d-flex justify-content-between align-items-center">
-            <h4 class="mb-0">Total: &#8369;{{ number_format((float) $total, 2) }}</h4>
-            <a href="{{ route('checkout.index') }}" class="btn btn-primary">Proceed to checkout</a>
+            <h4 class="mb-0 text-white">Total: &#8369;{{ number_format((float) $total, 2) }}</h4>
+            <a href="{{ route('checkout.index') }}" class="btn btn-light">Proceed to checkout</a>
         </div>
     @endif
+    </div>
 </div>
 @endsection
 

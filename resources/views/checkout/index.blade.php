@@ -2,10 +2,11 @@
 
 @section('content')
 <div class="container">
-    <div class="mb-3">
-        <h1 class="fw-bold text-primary mb-1">Checkout</h1>
-        <p class="text-muted mb-0">Confirm order details and payment method.</p>
-    </div>
+    <div class="p-4 p-md-5 rounded-4" style="background: linear-gradient(90deg, #6b21a8, #a855f7);">
+        <div class="mb-3">
+            <h1 class="fw-bold text-white mb-1">Checkout</h1>
+            <p class="text-white mb-0" style="opacity: 0.9;">Confirm order details and payment method.</p>
+        </div>
 
     @if (session('status'))
         <div class="alert alert-success">{{ session('status') }}</div>
@@ -25,7 +26,7 @@
         </div>
     @endif
 
-    <div class="card border-0 shadow-sm mb-3">
+    <div class="card rounded-4 shadow-sm mb-3" style="border: 1px solid #000; overflow: hidden;">
         <div class="card-body">
             <h5 class="fw-semibold mb-3">Order summary</h5>
             <div class="table-responsive">
@@ -74,7 +75,7 @@
         </div>
     </div>
 
-    <form action="{{ route('checkout.process') }}" method="POST" class="card border-0 shadow-sm">
+    <form action="{{ route('checkout.process') }}" method="POST" class="card rounded-4 shadow-sm" style="border: 1px solid #000; overflow: hidden;">
         @csrf
         <div class="card-body">
             <h5 class="fw-semibold mb-3">Payment</h5>
@@ -91,5 +92,6 @@
             </div>
         </div>
     </form>
+    </div>
 </div>
 @endsection

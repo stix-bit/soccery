@@ -4,12 +4,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="mb-4">
-                <h1 class="fw-bold text-primary">Add categories</h1>
-                <p class="text-muted mb-0">Add a new category</p>
+            <div class="p-4 p-md-5 rounded-4" style="background: linear-gradient(90deg, #6b21a8, #a855f7);">
+                <h1 class="fw-bold text-white">Add categories</h1>
+                <p class="text-white-50 mb-0">Add a new category</p>
             </div>
 
-            <div class="card border-0 shadow-sm">
+            <div class="card rounded-4 shadow-sm mt-4" style="border: 1px solid #000; overflow: hidden;">
                 <div class="card-body">
                     <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf

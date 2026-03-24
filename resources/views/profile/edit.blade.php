@@ -2,9 +2,10 @@
 
 @section('content')
 <div class="container">
+    <div class="p-4 p-md-5 rounded-4" style="background: linear-gradient(90deg, #6b21a8, #a855f7);">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card rounded-4 shadow-sm" style="border: 1px solid #000; overflow: hidden;">
                 <div class="card-header">{{ __('Edit Profile') }}</div>
 
                 <div class="card-body">
@@ -104,6 +105,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </div>
 
